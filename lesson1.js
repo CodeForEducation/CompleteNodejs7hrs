@@ -6,18 +6,21 @@ const PORT = 5000; // Corrected port number
 const myServer = http.createServer((req, res) => {
     console.log(req.url, req.method);
     
-    let filePath = '.' + req.url; // Corrected filePath variable
+ //   let path ; // Corrected filePath variable
     
     // Checking if request URL is '/' or '/index.html'
-    if (filePath === './' || filePath === './index.html') {
-        fs.readFile(path.join(__dirname, 'views', 'index.html'), 'utf-8', (err, data) => {
+    /*
+    if (req.url === '/' || req.url === 'index.html') {
+        fs.readFile ('index.html', 'utf-8', (err, data) => {
             if (err) {
-                res.writeHead(500);
-                res.end('Error loading index.html');
-                return;
+                res.status=200;
+                res.Header('content-type','text/html')
+            fs.readFile(Path,'utf-8',(err,data)=>
+            {
+                res.end(data);
+            })
             }
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
+
         });
     } else {
         // If URL does not match any known routes, return 404 Not Found
@@ -25,7 +28,24 @@ const myServer = http.createServer((req, res) => {
         res.end('404 Not Found');
     }
 });
+*/
+switch(req.url)
+{
+    case '/' :
+        res.statusCode=200;
+        const filePath=path.join(__dirname,'views','index.html')
+        fs.readFile(filePath,'utf-8',(err,data)=>
+            {
+                res.end(data);
+            }
+        );
+        break;
+    }
+})
 
-myServer.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
-});
+
+
+myServer.listen(PORT,()=>
+{
+    console.log(PORT)
+})
